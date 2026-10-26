@@ -94,3 +94,23 @@ FileNotFoundError: [Errno 2] No such file or directory: 'E:\\Project-XML\\app\\s
 2026-09-30 01:18:05,452 | INFO     | app.validator | XML успешно прошёл валидацию
 2026-09-30 01:18:05,454 | INFO     | app.repository | Из XML извлечено записей: 2
 2026-09-30 01:18:05,553 | INFO     | app.repository | Сохранено в БД записей: 2
+2026-10-01 23:37:26,397 | INFO     | app.validator | Загрузка XSD-схемы из: E:\Project-XML\app\schemas\books.xsd (существует: True)
+2026-10-01 23:37:29,020 | INFO     | app.db | Инициализация БД: sqlite:///./books.db
+2026-10-01 23:37:29,037 | INFO     | app.validator | XML успешно прошёл валидацию
+2026-10-01 23:37:29,041 | INFO     | app.repository | Из XML извлечено записей: 2
+2026-10-01 23:37:29,133 | INFO     | app.repository | Сохранено в БД записей: 2
+2026-10-01 23:37:37,484 | INFO     | app.validator | Загрузка XSD-схемы из: E:\Project-XML\app\schemas\books.xsd (существует: True)
+2026-10-01 23:37:37,485 | INFO     | app.validator | XML успешно прошёл валидацию
+2026-10-01 23:37:37,485 | WARNING  | app.validator | Файл не прошёл валидацию по схеме: ["<string>:5:0:ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT: Element '{http://mephi3.ru}publishDate': This element is not expected. Expected is ( {http://mephi3.ru}author )."]
+2026-10-01 23:37:37,486 | ERROR    | app.validator | XML не является well-formed: Opening and ending tag mismatch: name line 4 and book, line 5, column 12 (<string>, line 5)
+2026-10-01 23:38:00,417 | INFO     | app.db | Инициализация БД: sqlite:///./books.db
+2026-10-19 02:16:02,027 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-10-19 02:16:02,107 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-10-19 02:16:19,345 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-10-19 02:16:19,365 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-10-19 02:16:23,779 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-10-19 02:16:23,797 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-10-19 02:17:43,303 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-10-19 02:17:43,324 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-10-20 11:33:13,250 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-10-20 11:33:13,417 | INFO     | app.repository | Сохранено в БД записей: 1

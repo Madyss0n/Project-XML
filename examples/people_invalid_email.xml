@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<People xmlns="urn:mephi:people" xmlns:p="urn:mephi:people"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <person id="student1" xsi:type="p:StudentType">
+    <fullName>Иван Иванов</fullName>
+    <birthDate>2003-05-21</birthDate>
+    <contacts>
+      <email>ivan-at-example.org</email>
+      <email>ivan@university.example</email>
+      <phone>+79991234567</phone>
+    </contacts>
+    <university>НИЯУ МИФИ</university>
+    <course>4</course>
+  </person>
+  <person id="employee1" xsi:type="p:EmployeeType">
+    <fullName>Анна Петрова</fullName>
+    <birthDate>1995-02-28</birthDate>
+    <contacts>
+      <email>anna@example.org</email>
+    </contacts>
+    <organization>Учебная лаборатория</organization>
+    <position>Инженер</position>
+  </person>
+</People>

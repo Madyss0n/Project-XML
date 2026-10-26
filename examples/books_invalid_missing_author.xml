@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Books xmlns="http://mephi3.ru">
+  <book>
+    <name>Война и мир</name>
+    <publishDate>1869-01-01</publishDate>
+  </book>
+</Books>
