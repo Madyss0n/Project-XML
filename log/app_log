@@ -786,3 +786,72 @@ sqlalchemy.exc.SQLAlchemyError: storage failure after flush
 Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
 2026-11-04 00:20:08,239 | WARNING  | app.validation_history | Ошибка валидации | проверка=ab5132ca-db91-493a-b5b7-27e1b4496034 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
 Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-04 00:49:06,541 | WARNING  | app.database | Ошибка валидации | проверка=9350f1fd-c5e9-4ea1-ba74-13fa4beec93d | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_invalid_missing_author.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 5, столбец 0: Element '{http://mephi3.ru}publishDate': This element is not expected. Expected is ( {http://mephi3.ru}author ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-04 00:49:06,570 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-04 00:49:06,574 | INFO     | app.database | В validation_acces сохранено строк: 1 | проверка=7645aa89-eceb-4629-910b-785516bdd76c | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-04 00:49:06,575 | WARNING  | app.database | Ошибка валидации | проверка=ffed4888-a462-4ca8-978b-ccbfe779e2cf | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Задайте каждому человеку уникальный id, например student1 или employee1.
+2026-11-04 00:49:06,580 | WARNING  | app.database | Ошибка валидации | проверка=ed6b8a7c-b992-4718-abea-b9cf3d43100d | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-04 00:49:06,585 | WARNING  | app.database | Ошибка валидации | проверка=2bcf4fd2-e41f-458f-854c-02a21566b1d9 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_missing_field.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 12, столбец 0: Element '{urn:mephi:people}course': This element is not expected. Expected is ( {urn:mephi:people}university ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-04 00:49:06,591 | WARNING  | app.database | Ошибка валидации | проверка=5610790d-4bb8-4eaf-aaee-e981f1bb0b6d | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-04 00:49:06,596 | WARNING  | app.database | Ошибка валидации | проверка=bd7f947d-9127-4428-84a7-f67a4bad628a | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_syntax.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 11, столбец 15: Opening and ending tag mismatch: contacts line 7 and contact
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-04 00:49:06,601 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-04 00:49:06,605 | INFO     | app.database | В validation_acces сохранено строк: 2 | проверка=a544a794-b4df-4763-b025-de897d89d559 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-04 00:49:06,607 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-04 00:49:06,608 | ERROR    | app.database | Не удалось сохранить данные успешной проверки в SQLite
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\database.py", line 147, in record_validation_success
+    _save('validation_acces', records)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\database.py", line 68, in _save
+    _init_db(str(DATABASE_PATH))
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\database.py", line 60, in _init_db
+    with closing(sqlite3.connect(path)) as connection:
+                 ^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open database file
+2026-11-04 00:49:06,609 | WARNING  | app.database | Ошибка валидации | проверка=43e7630d-b19f-4a80-b304-511a6d89a3a1 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-04 00:49:06,609 | ERROR    | app.database | Не удалось сохранить ошибки в SQLite
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 66, in _validate_xml
+    root = etree.fromstring(xml_bytes, parser)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3434, in lxml.etree.fromstring
+  File "src/lxml/parser.pxi", line 2080, in lxml.etree._parseMemoryDocument
+  File "src/lxml/parser.pxi", line 1923, in lxml.etree._parseDoc
+  File "src/lxml/parser.pxi", line 1948, in lxml.etree._parseDoc_bytes
+  File "src/lxml/parser.pxi", line 1195, in lxml.etree._BaseParser._parseDoc
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 689, in lxml.etree._raiseParseError
+  File "<string>", line 1
+lxml.etree.XMLSyntaxError: Opening and ending tag mismatch: a line 1 and b, line 1, column 8
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 92, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 73, in _validate_xml
+    _raise(issues)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 61, in _raise
+    raise XMLValidationError([str(issue) for issue in issues], issues)
+app.validator.XMLValidationError: Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\database.py", line 101, in record_validation_failure
+    _save('validation_errors', records)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\database.py", line 68, in _save
+    _init_db(str(DATABASE_PATH))
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\database.py", line 60, in _init_db
+    with closing(sqlite3.connect(path)) as connection:
+                 ^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: unable to open database file

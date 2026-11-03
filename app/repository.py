@@ -9,7 +9,7 @@ logger = setup_logger(__name__)
 NS = {"b": "http://mephi3.ru"}
 
 
-def parse_books_from_xml(root: etree._Element) -> list[Book]:
+def parse_books_from_xml(root: etree._Element) -> list[Book]: #берет уже провалидированное дерево и превращает его в список объектов book, 
     """
     Превращает провалидированное XML-дерево в список объектов Book.
     Предполагается, что root уже прошёл validate_xml() и соответствует схеме,

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from lxml import etree
 from app.logger import setup_logger
-from app.validation_history import record_validation_failure, record_validation_success
+from app.database import record_validation_failure, record_validation_success
 
 logger = setup_logger(__name__)
 
@@ -39,14 +39,8 @@ def _parser():
 def _suggestion(message, code):
     if 'email' in message and 'pattern' in message:
         return 'Укажите email вида name@example.org, без пробелов.'
-    if 'pattern' in message:
-        return 'Проверьте шаблон из сообщения: телефон — +79991234567, индекс — 6 цифр.'
-    if 'enumeration' in message:
-        return 'Выберите допустимое значение из списка в сообщении (регистр важен).'
-    if 'Duplicate key' in message:
-        return 'Задайте уникальный id человеку или уберите повторяющийся email у одного человека.'
-    if 'No match found for key-sequence' in message:
-        return 'Укажите в personRef id человека, существующего в этом документе.'
+    if 'Duplicate' in message or 'xs:ID' in message:
+        return 'Задайте каждому человеку уникальный id, например student1 или employee1.'
     if 'required but missing' in message:
         return 'Добавьте обязательный атрибут из сообщения в открывающий тег.'
     if 'Missing child element' in message or 'not expected' in message:
@@ -80,11 +74,10 @@ def _validate_xml(xml_bytes: bytes, schema_path: Path) -> etree._Element:
     if root.getroottree().docinfo.doctype:
         _raise([ValidationIssue('Формат XML', 1, 0, '', 'DOCTYPE не поддерживается.',
                                'Удалите DOCTYPE и замените пользовательские сущности обычным текстом.')])
-    path = Path(schema_path) if schema_path is not None else SCHEMA_PATH
     try:
-        schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+        schema = etree.XMLSchema(etree.parse(str(schema_path), _parser()))
     except (OSError, etree.XMLSyntaxError, etree.XMLSchemaParseError) as exc:
-        raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+        raise RuntimeError(f'Не удалось загрузить XSD-схему {schema_path}: {exc}') from exc
     if not schema.validate(root):
         _raise([ValidationIssue('XSD', e.line, e.column, e.path or '', e.message,
                                _suggestion(e.message, e.type_name)) for e in schema.error_log])
