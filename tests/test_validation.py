@@ -4,12 +4,16 @@ from pathlib import Path
 
 from app.gui import decode_xml, normalize_encoding
 from app.validator import SCHEMAS, XMLValidationError, validate_file, validate_xml
+from tests.support import isolate_history
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLES = ROOT / 'examples'
 
 
 class ValidationTests(unittest.TestCase):
+    def setUp(self):
+        isolate_history(self)
+
     def test_valid_examples(self):
         paths = list(EXAMPLES.glob('*_valid.xml'))
         self.assertEqual(len(paths), 2)

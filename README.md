@@ -41,13 +41,15 @@ Tkinter входит в обычную установку Python для Windows;
 | `examples/` | 8 XML: 2 корректных и 6 некорректных для двух схем |
 | `tests/` | Автотесты валидатора, интерфейса и совместимости импорта книг |
 | `app/models.py`, `app/db.py`, `app/repository.py` | Модель Book и сохранение книг в SQLite |
+| `app/validation_history.py` | Запись ошибок и успешно проверенных данных в SQLite, логирование |
+| `docs/database.md` | Структура БД, открытие в DBeaver и запросы для просмотра |
 | `docs/people-schema.md` | Описание структуры, типов, ограничений и сценариев демонстрации |
 | `docs/project-review.md` | Анализ исходного состояния и дальнейшие задачи |
 
 ## Программный интерфейс
 
 ```python
-from app.validator import validate_file, validate_xml, XMLValidationError, SCHEMAS
+from app.validator import validate_file, validate_xml, XMLValidationError, ValidationStorageError, SCHEMAS
 
 try:
     root = validate_file('examples/people_valid.xml', SCHEMAS['people'])
@@ -55,6 +57,8 @@ try:
 except XMLValidationError as exc:
     for issue in exc.issues:
         print(issue.line, issue.path, issue.message, issue.suggestion)
+except ValidationStorageError as exc:
+    print('XML корректен, но сохранение в БД не выполнено:', exc)
 ```
 
 `validate_xml(data)` по умолчанию использует `books.xsd`: старый код импорта книг совместим.
@@ -64,6 +68,21 @@ except XMLValidationError as exc:
 Ошибка чтения файла — `OSError`; ошибка загрузки/компиляции схемы — `RuntimeError`.
 Схема компилируется при каждой проверке, поэтому изменения XSD видны без перезапуска.
 
+Ошибки XML автоматически записываются в таблицу `validation_errors` файла `books.db`
+и в `log/app_log`. Это работает для окна, `validate_file()` и `validate_xml()`.
+При проверке байтов можно указать `source_name='document.xml'`; иначе источник - `<bytes>`.
+Несколько ошибок одной проверки объединены полем `validation_id`.
+При сбое SQLite исходное исключение сохраняется, а `.persistence_error` содержит причину
+ошибки записи; в окне появляется предупреждение.
+При успехе данные автоматически сохраняются в `validation_acces`: одна книга или
+человек - одна строка. Поля XML раскладываются по столбцам (name, author, full_name,
+email1-email3, university и т. д.). Несколько строк одного документа имеют общий
+`validation_id`. Повторная проверка добавляет новую группу строк. Успех пишется в лог.
+Если корректный XML не удалось сохранить, возникает `ValidationStorageError`;
+окно явно сообщает об успехе валидации и сбое записи.
+Путь к БД закреплён за корнем проекта и не зависит от рабочей папки PyCharm.
+Подробности: [База данных и DBeaver](docs/database.md).
+
 Сначала проверяется синтаксис, затем соответствие XSD. При сломанном синтаксисе
 проверка XSD невозможна. После исправления могут появиться новые ошибки, ранее
 скрытые нарушением структуры. Подсказки основаны на диагностике валидатора;
@@ -72,9 +91,11 @@ DOCTYPE и пользовательские сущности не поддерж
 
 ## Границы текущего этапа
 
-Оконное приложение валидирует документы и сохраняет XML. Оно не импортирует людей в БД.
-В БД реализована только модель Book. Для людей следующим этапом нужны отдельные
-ORM-модели, таблицы контактов/адресов, транзакционный импорт и тесты связей.
+Оконное приложение валидирует документы, сохраняет XML по кнопке и автоматически
+записывает корректные данные в `validation_acces`. В БД реализованы таблицы `books`,
+`validation_errors` и `validation_acces`. Для просмотра истории в GUI отдельная кнопка
+пока не добавлена; данные доступны в DBeaver. Таблица `books` используется старым
+явным импортом книг через `save_books()`.
 FastAPI и Docker пока не реализованы.
 
 Исходные ручные сценарии остались: `test_validator.py`, `test_db_manual.py`, `test_full.py`.

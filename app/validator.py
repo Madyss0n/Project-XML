@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 from pathlib import Path
 from lxml import etree
+from app.logger import setup_logger
+from app.validation_history import record_validation_failure, record_validation_success
+
+logger = setup_logger(__name__)
 
 SCHEMA_PATH = Path(__file__).parent / 'schemas' / 'books.xsd'
 SCHEMAS = {'books': SCHEMA_PATH, 'people': SCHEMA_PATH.with_name('people.xsd')}
@@ -22,7 +26,12 @@ class XMLValidationError(Exception):
     def __init__(self, errors: list[str], issues: list[ValidationIssue] | None = None):
         self.errors = errors
         self.issues = issues or []
+        self.persistence_error = None
         super().__init__('; '.join(errors))
+
+
+class ValidationStorageError(RuntimeError):
+    """The XML is valid, but saving its parsed data failed."""
 
 def _parser():
     return etree.XMLParser(resolve_entities=False, load_dtd=False, no_network=True)
@@ -57,8 +66,7 @@ def _suggestion(message, code):
 def _raise(issues):
     raise XMLValidationError([str(issue) for issue in issues], issues)
 
-def validate_xml(xml_bytes: bytes, schema_path: str | Path | None = None) -> etree._Element:
-    """Default schema remains books.xsd for compatibility."""
+def _validate_xml(xml_bytes: bytes, schema_path: Path) -> etree._Element:
     parser = _parser()
     try:
         root = etree.fromstring(xml_bytes, parser)
@@ -82,5 +90,26 @@ def validate_xml(xml_bytes: bytes, schema_path: str | Path | None = None) -> etr
                                _suggestion(e.message, e.type_name)) for e in schema.error_log])
     return root
 
+def validate_xml(xml_bytes: bytes, schema_path: str | Path | None = None,
+                 *, source_name: str | Path | None = None) -> etree._Element:
+    """Validate XML, then store either diagnostics or successfully parsed records."""
+    schema_path = Path(schema_path or SCHEMA_PATH).resolve()
+    source = str(source_name) if source_name is not None else "<bytes>"
+    try:
+        root = _validate_xml(xml_bytes, schema_path)
+    except XMLValidationError as exc:
+        exc.persistence_error = record_validation_failure(exc.issues, schema_path, source)
+        raise
+    except RuntimeError:
+        logger.exception("Ошибка загрузки XSD | источник=%s | схема=%s", source, schema_path)
+        raise
+    logger.info("Валидация пройдена | источник=%s | схема=%s", source, schema_path)
+    storage_error = record_validation_success(root, schema_path, source)
+    if storage_error:
+        raise ValidationStorageError(f'XML прошёл валидацию, но данные не записаны в БД: {storage_error}')
+    return root
+
+
 def validate_file(path: str | Path, schema_path: str | Path | None = None) -> etree._Element:
-    return validate_xml(Path(path).read_bytes(), schema_path)
+    path = Path(path).resolve()
+    return validate_xml(path.read_bytes(), schema_path, source_name=path)

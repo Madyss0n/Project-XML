@@ -114,3 +114,675 @@ FileNotFoundError: [Errno 2] No such file or directory: 'E:\\Project-XML\\app\\s
 2026-10-19 02:17:43,324 | INFO     | app.repository | Сохранено в БД записей: 1
 2026-10-20 11:33:13,250 | INFO     | app.repository | Из XML извлечено записей: 1
 2026-10-20 11:33:13,417 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-11-03 21:32:49,370 | ERROR    | app.validator | Ошибка загрузки XSD | источник=<bytes> | схема=C:\Users\Danila\AppData\Local\Temp\tmpmvmrv9de\broken.xsd
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 81, in _validate_xml
+    schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3717, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 2045, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 2071, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1962, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1231, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 689, in lxml.etree._raiseParseError
+  File "file:/C:/Users/Danila/AppData/Local/Temp/tmpmvmrv9de/broken.xsd", line 1
+lxml.etree.XMLSyntaxError: Premature end of data in tag broken line 1, line 1, column 9
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 95, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 83, in _validate_xml
+    raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+RuntimeError: Не удалось загрузить XSD-схему C:\Users\Danila\AppData\Local\Temp\tmpmvmrv9de\broken.xsd: Premature end of data in tag broken line 1, line 1, column 9 (file:/C:/Users/Danila/AppData/Local/Temp/tmpmvmrv9de/broken.xsd, line 1)
+2026-11-03 21:32:49,389 | WARNING  | app.validation_history | Ошибка валидации | проверка=c779a247-4675-4f0b-8ce4-7908c65427e7 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:32:49,406 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:32:49,409 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-11-03 21:32:49,412 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-11-03 21:32:49,414 | WARNING  | app.validation_history | Ошибка валидации | проверка=7e713c04-7a49-40c0-9e30-554dfb15b0a8 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Формат XML, строка 1, столбец 0: DOCTYPE не поддерживается.
+Как исправить: Удалите DOCTYPE и замените пользовательские сущности обычным текстом.
+2026-11-03 21:32:49,441 | WARNING  | app.validation_history | Ошибка валидации | проверка=c4eb1c41-85fd-4829-8adc-12d60c5f49f8 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:32:49,444 | INFO     | app.validator | Валидация пройдена | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:32:49,447 | WARNING  | app.validation_history | Ошибка валидации | проверка=1c233d36-25f0-4d40-8e66-aba6ba63f5a8 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_invalid_missing_author.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 5, столбец 0: Element '{http://mephi3.ru}publishDate': This element is not expected. Expected is ( {http://mephi3.ru}author ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-03 21:32:49,450 | WARNING  | app.validation_history | Ошибка валидации | проверка=e8b72de7-4933-43a2-bff2-318aa5df8cb3 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:32:49,452 | WARNING  | app.validation_history | Ошибка валидации | проверка=08d03a69-f2b8-44f2-8540-b6441c8e748d | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:32:49,456 | WARNING  | app.validation_history | Ошибка валидации | проверка=0c387f55-a9db-4cde-962a-9e868d13154c | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_missing_field.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 12, столбец 0: Element '{urn:mephi:people}course': This element is not expected. Expected is ( {urn:mephi:people}university ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-03 21:32:49,478 | WARNING  | app.validation_history | Ошибка валидации | проверка=bfd3a0aa-e1c0-4be2-9074-466089921f56 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-03 21:32:49,483 | WARNING  | app.validation_history | Ошибка валидации | проверка=86a8c89b-234d-4960-b8de-97672966521b | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_syntax.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 11, столбец 15: Opening and ending tag mismatch: contacts line 7 and contact
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:32:49,485 | WARNING  | app.validation_history | Ошибка валидации | проверка=b9ddc9a2-9b40-4b7e-9b9a-a18ef386ab16 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:32:49,487 | WARNING  | app.validation_history | Ошибка валидации | проверка=e4c5e75d-73aa-4b1d-8be6-38e77c41a4ec | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: x line 1 and y
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:32:49,488 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:32:49,496 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:32:49,497 | WARNING  | app.validation_history | Ошибка валидации | проверка=6a850ce5-773c-44e8-9096-52d379b3915b | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 3, столбец 0: Element '{urn:mephi:people}People': No matching global declaration available for the validation root.
+Как исправить: Проверьте схему, корневой элемент и xmlns: People — urn:mephi:people; Books — http://mephi3.ru.
+2026-11-03 21:32:49,500 | WARNING  | app.validation_history | Ошибка валидации | проверка=08cadf4c-ea51-4129-b060-ac83d17b2df1 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:32:49,500 | WARNING  | app.validation_history | Ошибка валидации | проверка=08cadf4c-ea51-4129-b060-ac83d17b2df1 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:32:49,504 | WARNING  | app.validation_history | Ошибка валидации | проверка=22a22417-2072-4a2a-87e2-79d68b5e0366 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:32:49,504 | WARNING  | app.validation_history | Ошибка валидации | проверка=22a22417-2072-4a2a-87e2-79d68b5e0366 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:32:49,529 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:32:49,530 | ERROR    | app.validator | Ошибка загрузки XSD | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 81, in _validate_xml
+    schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3717, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 2045, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 2071, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1962, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1231, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 687, in lxml.etree._raiseParseError
+OSError: Error reading file 'E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd': failed to load external entity "file:/E:/.MEPHI/4%20%D0%BA%D1%83%D1%80%D1%81/%D0%92%D0%B0%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2/Project-XML/examples/missing.xsd"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 95, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 83, in _validate_xml
+    raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+RuntimeError: Не удалось загрузить XSD-схему E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd: Error reading file 'E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd': failed to load external entity "file:/E:/.MEPHI/4%20%D0%BA%D1%83%D1%80%D1%81/%D0%92%D0%B0%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2/Project-XML/examples/missing.xsd"
+2026-11-03 21:32:49,531 | WARNING  | app.validation_history | Ошибка валидации | проверка=655d6f89-6a4d-4a80-8b2d-e0518ca4d696 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:32:49,533 | WARNING  | app.validation_history | Ошибка валидации | проверка=887d0fd8-7760-482d-83f3-e1500b21e5b3 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Формат XML, строка 1, столбец 0: DOCTYPE не поддерживается.
+Как исправить: Удалите DOCTYPE и замените пользовательские сущности обычным текстом.
+2026-11-03 21:32:49,536 | WARNING  | app.validation_history | Ошибка валидации | проверка=84132e03-0c01-4dbd-8fce-92753f2be650 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:32:49,538 | ERROR    | app.validation_history | Не удалось сохранить ошибки проверки 84132e03-0c01-4dbd-8fce-92753f2be650 в SQLite
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 95, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 85, in _validate_xml
+    _raise([ValidationIssue('XSD', e.line, e.column, e.path or '', e.message,
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 63, in _raise
+    raise XMLValidationError([str(issue) for issue in issues], issues)
+app.validator.XMLValidationError: XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validation_history.py", line 36, in record_validation_failure
+    session.commit()
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2095, in commit
+    trans.commit(_to_root=True)
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction.commit>", line 2, in commit
+    return target(fn, self, _to_root=_to_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1330, in commit
+    self._prepare_impl()
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._prepare_impl>", line 2, in _prepare_impl
+    return target(fn, self)
+           ^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1304, in _prepare_impl
+    self.session.flush()
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4536, in flush
+    self._flush(objects)
+  File "<sqlalchemy generated warned() wrapper for sqlalchemy.orm.session.Session._flush>", line 2, in _flush
+    return target(fn, self, objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\util\deprecations.py", line 281, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4679, in _flush
+    with util.safe_reraise():
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4644, in _flush
+    self.dispatch.after_flush(self, flush_context)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\event\attr.py", line 388, in __call__
+    fn(*args, **kw)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\tests\test_validation_history.py", line 80, in reject_flush
+    raise SQLAlchemyError('storage failure after flush')
+sqlalchemy.exc.SQLAlchemyError: storage failure after flush
+2026-11-03 21:33:30,473 | WARNING  | app.validation_history | Ошибка валидации | проверка=532766e6-f479-4fb5-8b42-1eaee06f1f6f | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:33:30,485 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:33:30,488 | INFO     | app.validator | Валидация пройдена | источник=C:\Users\Danila\AppData\Local\Temp\tmp3rdt16fx\исправленный.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:33:30,490 | WARNING  | app.validation_history | Ошибка валидации | проверка=285ae950-f2bf-47f9-9b3a-1891f6f97614 | источник=C:\Users\Danila\AppData\Local\Temp\tmp3rdt16fx\исправленный.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'minInclusive'] The value '0' is less than the minimum value allowed ('1').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:33:30,540 | WARNING  | app.validation_history | Ошибка валидации | проверка=5d45752d-a2f3-44f1-8b22-33948ce162ef | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 1, столбец 1: Document is empty
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:33:30,543 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:34:32,608 | INFO     | app.db | Таблицы БД готовы: E:\.MEPHI\4 курс\Ваганов\Project-XML\books.db
+2026-11-03 21:34:32,609 | WARNING  | app.validation_history | Ошибка валидации | проверка=dd0bb738-6d7a-47d6-aa9a-5fef63f57bf4 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:34:41,967 | WARNING  | app.validation_history | Ошибка валидации | проверка=fb1be4b9-fae2-4905-a0a9-624274515beb | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:34:41,975 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:34:41,978 | INFO     | app.validator | Валидация пройдена | источник=C:\Users\Danila\AppData\Local\Temp\tmp49f27p37\исправленный.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:34:41,980 | WARNING  | app.validation_history | Ошибка валидации | проверка=1d2c4c91-2072-4e66-b40a-11c9af6f6064 | источник=C:\Users\Danila\AppData\Local\Temp\tmp49f27p37\исправленный.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'minInclusive'] The value '0' is less than the minimum value allowed ('1').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:34:42,028 | WARNING  | app.validation_history | Ошибка валидации | проверка=233efc3a-1472-4b51-8cd2-103532f9a891 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 1, столбец 1: Document is empty
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:34:42,032 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:34:42,038 | ERROR    | app.validator | Ошибка загрузки XSD | источник=<bytes> | схема=C:\Users\Danila\AppData\Local\Temp\tmpigjbudfh\broken.xsd
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 81, in _validate_xml
+    schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3717, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 2045, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 2071, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1962, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1231, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 689, in lxml.etree._raiseParseError
+  File "file:/C:/Users/Danila/AppData/Local/Temp/tmpigjbudfh/broken.xsd", line 1
+lxml.etree.XMLSyntaxError: Premature end of data in tag broken line 1, line 1, column 9
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 95, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 83, in _validate_xml
+    raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+RuntimeError: Не удалось загрузить XSD-схему C:\Users\Danila\AppData\Local\Temp\tmpigjbudfh\broken.xsd: Premature end of data in tag broken line 1, line 1, column 9 (file:/C:/Users/Danila/AppData/Local/Temp/tmpigjbudfh/broken.xsd, line 1)
+2026-11-03 21:34:42,041 | WARNING  | app.validation_history | Ошибка валидации | проверка=db2415c0-4206-443c-8802-772eb9ce95cb | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:34:42,044 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:34:42,045 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-11-03 21:34:42,047 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-11-03 21:34:42,048 | WARNING  | app.validation_history | Ошибка валидации | проверка=37c5a142-a6b9-4322-a899-12db159ea2d0 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Формат XML, строка 1, столбец 0: DOCTYPE не поддерживается.
+Как исправить: Удалите DOCTYPE и замените пользовательские сущности обычным текстом.
+2026-11-03 21:34:42,052 | WARNING  | app.validation_history | Ошибка валидации | проверка=4fe24eaf-c270-444e-bfb9-a55dd4952f55 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:34:42,057 | INFO     | app.validator | Валидация пройдена | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:34:42,059 | WARNING  | app.validation_history | Ошибка валидации | проверка=e4fc090a-c9af-45bb-9382-4060d72cbd86 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_invalid_missing_author.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 5, столбец 0: Element '{http://mephi3.ru}publishDate': This element is not expected. Expected is ( {http://mephi3.ru}author ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-03 21:34:42,061 | WARNING  | app.validation_history | Ошибка валидации | проверка=1d81acc8-960c-4485-bf11-c48000679c26 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:34:42,062 | WARNING  | app.validation_history | Ошибка валидации | проверка=489657aa-cc89-41a7-8e9c-cb1dab782ddb | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:34:42,064 | WARNING  | app.validation_history | Ошибка валидации | проверка=40daebbe-563c-41d5-babb-33b6f5dc8753 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_missing_field.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 12, столбец 0: Element '{urn:mephi:people}course': This element is not expected. Expected is ( {urn:mephi:people}university ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-03 21:34:42,065 | WARNING  | app.validation_history | Ошибка валидации | проверка=d471c98a-c532-4930-8295-85d5a173453c | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-03 21:34:42,066 | WARNING  | app.validation_history | Ошибка валидации | проверка=d4ece49a-ba26-40c8-8972-13f9657d31ce | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_syntax.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 11, столбец 15: Opening and ending tag mismatch: contacts line 7 and contact
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:34:42,068 | WARNING  | app.validation_history | Ошибка валидации | проверка=78a8d18a-8a73-449a-bdd1-6ca49e625180 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:34:42,078 | WARNING  | app.validation_history | Ошибка валидации | проверка=fabc35c8-8d55-4e1b-bdc9-915db79689b4 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: x line 1 and y
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:34:42,080 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:34:42,081 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:34:42,082 | WARNING  | app.validation_history | Ошибка валидации | проверка=e6962421-563a-480a-b110-8a95539e96a9 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 3, столбец 0: Element '{urn:mephi:people}People': No matching global declaration available for the validation root.
+Как исправить: Проверьте схему, корневой элемент и xmlns: People — urn:mephi:people; Books — http://mephi3.ru.
+2026-11-03 21:34:42,085 | WARNING  | app.validation_history | Ошибка валидации | проверка=870f2750-e2b2-4bff-b8a5-8da95e6fade1 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:34:42,085 | WARNING  | app.validation_history | Ошибка валидации | проверка=870f2750-e2b2-4bff-b8a5-8da95e6fade1 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:34:42,088 | WARNING  | app.validation_history | Ошибка валидации | проверка=729a82da-9fd9-4bec-b8c6-69ed4135cc33 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:34:42,088 | WARNING  | app.validation_history | Ошибка валидации | проверка=729a82da-9fd9-4bec-b8c6-69ed4135cc33 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:34:42,097 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:34:42,097 | ERROR    | app.validator | Ошибка загрузки XSD | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 81, in _validate_xml
+    schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3717, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 2045, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 2071, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1962, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1231, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 687, in lxml.etree._raiseParseError
+OSError: Error reading file 'E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd': failed to load external entity "file:/E:/.MEPHI/4%20%D0%BA%D1%83%D1%80%D1%81/%D0%92%D0%B0%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2/Project-XML/examples/missing.xsd"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 95, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 83, in _validate_xml
+    raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+RuntimeError: Не удалось загрузить XSD-схему E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd: Error reading file 'E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd': failed to load external entity "file:/E:/.MEPHI/4%20%D0%BA%D1%83%D1%80%D1%81/%D0%92%D0%B0%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2/Project-XML/examples/missing.xsd"
+2026-11-03 21:34:42,099 | WARNING  | app.validation_history | Ошибка валидации | проверка=f059873f-7144-4597-9d19-dc7134536133 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:34:42,101 | WARNING  | app.validation_history | Ошибка валидации | проверка=50f062cd-96b5-4814-9770-7502a57f6e65 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Формат XML, строка 1, столбец 0: DOCTYPE не поддерживается.
+Как исправить: Удалите DOCTYPE и замените пользовательские сущности обычным текстом.
+2026-11-03 21:34:42,103 | WARNING  | app.validation_history | Ошибка валидации | проверка=2356be14-a615-4dbf-804d-f25770e06d6d | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:34:42,105 | ERROR    | app.validation_history | Не удалось сохранить ошибки проверки 2356be14-a615-4dbf-804d-f25770e06d6d в SQLite
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 95, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 85, in _validate_xml
+    _raise([ValidationIssue('XSD', e.line, e.column, e.path or '', e.message,
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 63, in _raise
+    raise XMLValidationError([str(issue) for issue in issues], issues)
+app.validator.XMLValidationError: XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validation_history.py", line 36, in record_validation_failure
+    session.commit()
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2095, in commit
+    trans.commit(_to_root=True)
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction.commit>", line 2, in commit
+    return target(fn, self, _to_root=_to_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1330, in commit
+    self._prepare_impl()
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._prepare_impl>", line 2, in _prepare_impl
+    return target(fn, self)
+           ^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1304, in _prepare_impl
+    self.session.flush()
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4536, in flush
+    self._flush(objects)
+  File "<sqlalchemy generated warned() wrapper for sqlalchemy.orm.session.Session._flush>", line 2, in _flush
+    return target(fn, self, objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\util\deprecations.py", line 281, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4679, in _flush
+    with util.safe_reraise():
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4644, in _flush
+    self.dispatch.after_flush(self, flush_context)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\event\attr.py", line 388, in __call__
+    fn(*args, **kw)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\tests\test_validation_history.py", line 80, in reject_flush
+    raise SQLAlchemyError('storage failure after flush')
+sqlalchemy.exc.SQLAlchemyError: storage failure after flush
+2026-11-03 21:50:19,209 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,222 | WARNING  | app.validation_history | Ошибка валидации | проверка=fc78043c-3a97-4575-8be8-9145caeddc41 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:50:19,227 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:50:19,229 | INFO     | app.validation_history | В validation_acces сохранено строк: 1 | проверка=9edb72ed-bfda-4698-a97d-c9ddeb4ae092 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-03 21:50:19,232 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,237 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,240 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=1c60716f-cd99-47c0-af35-f5915e55845c | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:50:19,241 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,242 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=474ae688-ec25-4cc3-9240-fc91ac7c72a7 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:50:19,245 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,248 | INFO     | app.validator | Валидация пройдена | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,252 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=d6bde618-ce06-46dc-a195-8d2cbfaa4f59 | источник=<редактор>
+2026-11-03 21:50:19,254 | WARNING  | app.validation_history | Ошибка валидации | проверка=6b87bc6b-d3f3-462a-8dc2-8b79d205c774 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:50:19,254 | WARNING  | app.validation_history | Ошибка валидации | проверка=6b87bc6b-d3f3-462a-8dc2-8b79d205c774 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:50:19,258 | WARNING  | app.validation_history | Ошибка валидации | проверка=f2b32800-3fef-4287-a3e7-694813c2960e | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:50:19,258 | WARNING  | app.validation_history | Ошибка валидации | проверка=f2b32800-3fef-4287-a3e7-694813c2960e | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:50:19,278 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,281 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=544609e6-5ea3-4a15-a3fb-0560dff99b64 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:50:19,281 | ERROR    | app.validator | Ошибка загрузки XSD | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 85, in _validate_xml
+    schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3717, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 2045, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 2071, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1962, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1231, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 687, in lxml.etree._raiseParseError
+OSError: Error reading file 'E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd': failed to load external entity "file:/E:/.MEPHI/4%20%D0%BA%D1%83%D1%80%D1%81/%D0%92%D0%B0%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2/Project-XML/examples/missing.xsd"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 99, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 87, in _validate_xml
+    raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+RuntimeError: Не удалось загрузить XSD-схему E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd: Error reading file 'E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd': failed to load external entity "file:/E:/.MEPHI/4%20%D0%BA%D1%83%D1%80%D1%81/%D0%92%D0%B0%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2/Project-XML/examples/missing.xsd"
+2026-11-03 21:50:19,283 | WARNING  | app.validation_history | Ошибка валидации | проверка=608e9d63-721d-41a1-a4d5-21944b21978a | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:50:19,286 | WARNING  | app.validation_history | Ошибка валидации | проверка=5a481112-13d5-42ba-a054-fe09bf4d6b5c | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Формат XML, строка 1, столбец 0: DOCTYPE не поддерживается.
+Как исправить: Удалите DOCTYPE и замените пользовательские сущности обычным текстом.
+2026-11-03 21:50:19,289 | WARNING  | app.validation_history | Ошибка валидации | проверка=7108517d-ec81-48e8-8b13-694550cfb88d | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:50:19,291 | ERROR    | app.validation_history | Не удалось сохранить ошибки проверки 7108517d-ec81-48e8-8b13-694550cfb88d в SQLite
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 99, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 89, in _validate_xml
+    _raise([ValidationIssue('XSD', e.line, e.column, e.path or '', e.message,
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 67, in _raise
+    raise XMLValidationError([str(issue) for issue in issues], issues)
+app.validator.XMLValidationError: XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validation_history.py", line 36, in record_validation_failure
+    session.commit()
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2095, in commit
+    trans.commit(_to_root=True)
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction.commit>", line 2, in commit
+    return target(fn, self, _to_root=_to_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1330, in commit
+    self._prepare_impl()
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._prepare_impl>", line 2, in _prepare_impl
+    return target(fn, self)
+           ^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1304, in _prepare_impl
+    self.session.flush()
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4536, in flush
+    self._flush(objects)
+  File "<sqlalchemy generated warned() wrapper for sqlalchemy.orm.session.Session._flush>", line 2, in _flush
+    return target(fn, self, objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\util\deprecations.py", line 281, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4679, in _flush
+    with util.safe_reraise():
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4644, in _flush
+    self.dispatch.after_flush(self, flush_context)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\event\attr.py", line 388, in __call__
+    fn(*args, **kw)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\tests\test_validation_history.py", line 80, in reject_flush
+    raise SQLAlchemyError('storage failure after flush')
+sqlalchemy.exc.SQLAlchemyError: storage failure after flush
+2026-11-03 21:50:19,296 | ERROR    | app.validator | Ошибка загрузки XSD | источник=<bytes> | схема=C:\Users\Danila\AppData\Local\Temp\tmp95hbhuev\broken.xsd
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 85, in _validate_xml
+    schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3717, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 2045, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 2071, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1962, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1231, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 689, in lxml.etree._raiseParseError
+  File "file:/C:/Users/Danila/AppData/Local/Temp/tmp95hbhuev/broken.xsd", line 1
+lxml.etree.XMLSyntaxError: Premature end of data in tag broken line 1, line 1, column 9
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 99, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 87, in _validate_xml
+    raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+RuntimeError: Не удалось загрузить XSD-схему C:\Users\Danila\AppData\Local\Temp\tmp95hbhuev\broken.xsd: Premature end of data in tag broken line 1, line 1, column 9 (file:/C:/Users/Danila/AppData/Local/Temp/tmp95hbhuev/broken.xsd, line 1)
+2026-11-03 21:50:19,301 | WARNING  | app.validation_history | Ошибка валидации | проверка=8ce7facb-5d1f-490a-ad73-76eafa6de109 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:50:19,305 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:50:19,308 | INFO     | app.validation_history | В validation_acces сохранено строк: 1 | проверка=1a83b97f-5bba-427d-92b3-eb36424d1965 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-03 21:50:19,310 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-11-03 21:50:19,315 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-11-03 21:50:19,317 | WARNING  | app.validation_history | Ошибка валидации | проверка=fc6898a4-6ec5-41ae-8c5a-8bbba03ef3f2 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Формат XML, строка 1, столбец 0: DOCTYPE не поддерживается.
+Как исправить: Удалите DOCTYPE и замените пользовательские сущности обычным текстом.
+2026-11-03 21:50:19,323 | WARNING  | app.validation_history | Ошибка валидации | проверка=516215a6-19af-4f66-8e37-fb0839e26934 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:50:19,327 | INFO     | app.validator | Валидация пройдена | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,330 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=915b0aba-99e8-4136-88a1-5523e485792b | источник=<bytes>
+2026-11-03 21:50:19,333 | WARNING  | app.validation_history | Ошибка валидации | проверка=dd54e21c-6ba3-4fa7-8229-77b154793681 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_invalid_missing_author.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 5, столбец 0: Element '{http://mephi3.ru}publishDate': This element is not expected. Expected is ( {http://mephi3.ru}author ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-03 21:50:19,336 | WARNING  | app.validation_history | Ошибка валидации | проверка=13d7aac5-5f2f-4c8b-a33e-6a812ce1bf48 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:50:19,339 | WARNING  | app.validation_history | Ошибка валидации | проверка=97131677-bf15-4704-bc1b-0cb12b95ad7f | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:50:19,341 | WARNING  | app.validation_history | Ошибка валидации | проверка=e1c66e89-ea73-4c8f-8132-a397e182e24d | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_missing_field.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 12, столбец 0: Element '{urn:mephi:people}course': This element is not expected. Expected is ( {urn:mephi:people}university ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-03 21:50:19,343 | WARNING  | app.validation_history | Ошибка валидации | проверка=04aa369c-c9e3-4598-833f-bb6aa5a3f2fa | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-03 21:50:19,345 | WARNING  | app.validation_history | Ошибка валидации | проверка=4e2ec61b-35f7-4a7a-ac51-6d213c63951a | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_syntax.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 11, столбец 15: Opening and ending tag mismatch: contacts line 7 and contact
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:50:19,347 | WARNING  | app.validation_history | Ошибка валидации | проверка=08fab508-2a58-4096-aa05-7365b9f543ed | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:50:19,350 | WARNING  | app.validation_history | Ошибка валидации | проверка=42193b60-f71c-42c3-be47-c46c6e504874 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: x line 1 and y
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:50:19,352 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:50:19,354 | INFO     | app.validation_history | В validation_acces сохранено строк: 1 | проверка=96f9aed6-7e34-4384-a456-25827c9eed68 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-03 21:50:19,355 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:50:19,357 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=7a8b5db0-32ad-4e33-9f23-bd4a3dc03e06 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:50:19,358 | WARNING  | app.validation_history | Ошибка валидации | проверка=eb9b2dec-c4c6-471f-8274-e74ea89efc2c | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 3, столбец 0: Element '{urn:mephi:people}People': No matching global declaration available for the validation root.
+Как исправить: Проверьте схему, корневой элемент и xmlns: People — urn:mephi:people; Books — http://mephi3.ru.
+2026-11-03 21:51:16,276 | INFO     | app.db | Таблицы БД готовы: E:\.MEPHI\4 курс\Ваганов\Project-XML\books.db
+2026-11-03 21:51:16,277 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:51:16,409 | INFO     | app.validation_history | В validation_acces сохранено строк: 1 | проверка=f5e588bb-67f3-4730-9a0e-5bd5f55a0605 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-03 21:51:16,410 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:16,520 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=9f9f2179-2fcd-4037-9e67-60a5f8ee5356 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:51:27,312 | WARNING  | app.validation_history | Ошибка валидации | проверка=113b8672-ebbb-495b-9b86-4bea8dab7094 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:51:27,322 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,325 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=02694678-9395-42b3-8146-e9e7218ea381 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml
+2026-11-03 21:51:27,328 | INFO     | app.validator | Валидация пройдена | источник=C:\Users\Danila\AppData\Local\Temp\tmpl94jyz1o\исправленный.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,329 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=bf1b12f5-5a6e-4b11-9c19-dfe0175c95a1 | источник=C:\Users\Danila\AppData\Local\Temp\tmpl94jyz1o\исправленный.xml
+2026-11-03 21:51:27,332 | WARNING  | app.validation_history | Ошибка валидации | проверка=8254c6d4-7dc1-45ed-984f-5652a67ac808 | источник=C:\Users\Danila\AppData\Local\Temp\tmpl94jyz1o\исправленный.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'minInclusive'] The value '0' is less than the minimum value allowed ('1').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:51:27,387 | WARNING  | app.validation_history | Ошибка валидации | проверка=969c411a-5f0a-4a5f-878d-721c4a6e46bd | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 1, столбец 1: Document is empty
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:51:27,392 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:51:27,394 | INFO     | app.validation_history | В validation_acces сохранено строк: 1 | проверка=b86cd400-1f5d-4231-88ea-004c1c8ef681 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-03 21:51:27,458 | ERROR    | app.validator | Ошибка загрузки XSD | источник=<bytes> | схема=C:\Users\Danila\AppData\Local\Temp\tmpmemfvw4c\broken.xsd
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 85, in _validate_xml
+    schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3717, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 2045, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 2071, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1962, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1231, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 689, in lxml.etree._raiseParseError
+  File "file:/C:/Users/Danila/AppData/Local/Temp/tmpmemfvw4c/broken.xsd", line 1
+lxml.etree.XMLSyntaxError: Premature end of data in tag broken line 1, line 1, column 9
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 99, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 87, in _validate_xml
+    raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+RuntimeError: Не удалось загрузить XSD-схему C:\Users\Danila\AppData\Local\Temp\tmpmemfvw4c\broken.xsd: Premature end of data in tag broken line 1, line 1, column 9 (file:/C:/Users/Danila/AppData/Local/Temp/tmpmemfvw4c/broken.xsd, line 1)
+2026-11-03 21:51:27,461 | WARNING  | app.validation_history | Ошибка валидации | проверка=4a6290a5-e7a3-4fda-a060-105e776ae5b7 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:51:27,464 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:51:27,480 | INFO     | app.validation_history | В validation_acces сохранено строк: 1 | проверка=385e5df6-710d-4b89-a57e-1fd281a51f53 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-03 21:51:27,481 | INFO     | app.repository | Из XML извлечено записей: 1
+2026-11-03 21:51:27,484 | INFO     | app.repository | Сохранено в БД записей: 1
+2026-11-03 21:51:27,486 | WARNING  | app.validation_history | Ошибка валидации | проверка=6204c1fe-7443-4de2-8fcb-a522c0cd7923 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Формат XML, строка 1, столбец 0: DOCTYPE не поддерживается.
+Как исправить: Удалите DOCTYPE и замените пользовательские сущности обычным текстом.
+2026-11-03 21:51:27,490 | WARNING  | app.validation_history | Ошибка валидации | проверка=0c738afc-492c-4caf-adea-95d9af5b8e7b | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:51:27,492 | INFO     | app.validator | Валидация пройдена | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,494 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=69d86d25-9cf0-4817-a670-15b4939102c0 | источник=<bytes>
+2026-11-03 21:51:27,496 | WARNING  | app.validation_history | Ошибка валидации | проверка=04fb8681-9048-449e-9a55-d451e7f83754 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_invalid_missing_author.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 5, столбец 0: Element '{http://mephi3.ru}publishDate': This element is not expected. Expected is ( {http://mephi3.ru}author ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-03 21:51:27,500 | WARNING  | app.validation_history | Ошибка валидации | проверка=1dcafdc9-0d9b-4b12-a45b-8a03d0a174e8 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:51:27,502 | WARNING  | app.validation_history | Ошибка валидации | проверка=4a91f50c-6dc8-4d72-98eb-51612e0de2e9 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:51:27,504 | WARNING  | app.validation_history | Ошибка валидации | проверка=67a07ed4-f37b-432d-97b0-dee892949fb9 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_missing_field.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 12, столбец 0: Element '{urn:mephi:people}course': This element is not expected. Expected is ( {urn:mephi:people}university ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-03 21:51:27,507 | WARNING  | app.validation_history | Ошибка валидации | проверка=267856db-06c8-454f-aaa2-b6d6ac16902d | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-03 21:51:27,509 | WARNING  | app.validation_history | Ошибка валидации | проверка=bef22023-66ff-42ad-9355-f538a7807f4f | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_syntax.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 11, столбец 15: Opening and ending tag mismatch: contacts line 7 and contact
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:51:27,512 | WARNING  | app.validation_history | Ошибка валидации | проверка=d3a1cc75-c98a-4fcb-bca0-5e6407907c8f | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:51:27,515 | WARNING  | app.validation_history | Ошибка валидации | проверка=de6ee883-9bee-4bd8-befa-d8c7da21f8e9 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: x line 1 and y
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:51:27,517 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:51:27,519 | INFO     | app.validation_history | В validation_acces сохранено строк: 1 | проверка=e7c7bdad-2869-473d-88aa-3224c6b0bf8e | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-03 21:51:27,520 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,522 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=ba5a52ab-06c1-491a-9963-2c2748c078e6 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:51:27,524 | WARNING  | app.validation_history | Ошибка валидации | проверка=64c952a4-7343-457b-9b1f-18a7a733e076 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 3, столбец 0: Element '{urn:mephi:people}People': No matching global declaration available for the validation root.
+Как исправить: Проверьте схему, корневой элемент и xmlns: People — urn:mephi:people; Books — http://mephi3.ru.
+2026-11-03 21:51:27,526 | WARNING  | app.validation_history | Ошибка валидации | проверка=49f6b8f2-a53a-451f-8d9e-9f49f2260bfb | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:51:27,528 | WARNING  | app.validation_history | Ошибка валидации | проверка=49f6b8f2-a53a-451f-8d9e-9f49f2260bfb | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:51:27,531 | WARNING  | app.validation_history | Ошибка валидации | проверка=16eb8c57-d1f4-4777-84be-f65ab85c0831 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:51:27,531 | WARNING  | app.validation_history | Ошибка валидации | проверка=16eb8c57-d1f4-4777-84be-f65ab85c0831 | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-03 21:51:27,539 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,542 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=12970698-680e-4ec2-a03b-bb2df8fbf924 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:51:27,542 | ERROR    | app.validator | Ошибка загрузки XSD | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 85, in _validate_xml
+    schema = etree.XMLSchema(etree.parse(str(path), _parser()))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "src/lxml/etree.pyx", line 3717, in lxml.etree.parse
+  File "src/lxml/parser.pxi", line 2045, in lxml.etree._parseDocument
+  File "src/lxml/parser.pxi", line 2071, in lxml.etree._parseDocumentFromURL
+  File "src/lxml/parser.pxi", line 1962, in lxml.etree._parseDocFromFile
+  File "src/lxml/parser.pxi", line 1231, in lxml.etree._BaseParser._parseDocFromFile
+  File "src/lxml/parser.pxi", line 647, in lxml.etree._ParserContext._handleParseResultDoc
+  File "src/lxml/parser.pxi", line 765, in lxml.etree._handleParseResult
+  File "src/lxml/parser.pxi", line 687, in lxml.etree._raiseParseError
+OSError: Error reading file 'E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd': failed to load external entity "file:/E:/.MEPHI/4%20%D0%BA%D1%83%D1%80%D1%81/%D0%92%D0%B0%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2/Project-XML/examples/missing.xsd"
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 99, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 87, in _validate_xml
+    raise RuntimeError(f'Не удалось загрузить XSD-схему {path}: {exc}') from exc
+RuntimeError: Не удалось загрузить XSD-схему E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd: Error reading file 'E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\missing.xsd': failed to load external entity "file:/E:/.MEPHI/4%20%D0%BA%D1%83%D1%80%D1%81/%D0%92%D0%B0%D0%B3%D0%B0%D0%BD%D0%BE%D0%B2/Project-XML/examples/missing.xsd"
+2026-11-03 21:51:27,544 | WARNING  | app.validation_history | Ошибка валидации | проверка=ce39afac-aee6-485f-a0bf-33a5bb26becc | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 1, столбец 8: Opening and ending tag mismatch: a line 1 and b
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-03 21:51:27,546 | WARNING  | app.validation_history | Ошибка валидации | проверка=1d2532bb-b2b4-4576-a687-42a3354275e5 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Формат XML, строка 1, столбец 0: DOCTYPE не поддерживается.
+Как исправить: Удалите DOCTYPE и замените пользовательские сущности обычным текстом.
+2026-11-03 21:51:27,548 | WARNING  | app.validation_history | Ошибка валидации | проверка=17d7700c-9a92-4f71-8448-9ab6b8086278 | источник=<bytes> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:51:27,550 | ERROR    | app.validation_history | Не удалось сохранить ошибки проверки 17d7700c-9a92-4f71-8448-9ab6b8086278 в SQLite
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 99, in validate_xml
+    root = _validate_xml(xml_bytes, schema_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 89, in _validate_xml
+    _raise([ValidationIssue('XSD', e.line, e.column, e.path or '', e.message,
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validator.py", line 67, in _raise
+    raise XMLValidationError([str(issue) for issue in issues], issues)
+app.validator.XMLValidationError: XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\app\validation_history.py", line 36, in record_validation_failure
+    session.commit()
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2095, in commit
+    trans.commit(_to_root=True)
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction.commit>", line 2, in commit
+    return target(fn, self, _to_root=_to_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1330, in commit
+    self._prepare_impl()
+  File "<sqlalchemy generated _go() wrapper for sqlalchemy.orm.session.SessionTransaction._prepare_impl>", line 2, in _prepare_impl
+    return target(fn, self)
+           ^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 1304, in _prepare_impl
+    self.session.flush()
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4536, in flush
+    self._flush(objects)
+  File "<sqlalchemy generated warned() wrapper for sqlalchemy.orm.session.Session._flush>", line 2, in _flush
+    return target(fn, self, objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\util\deprecations.py", line 281, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4679, in _flush
+    with util.safe_reraise():
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4644, in _flush
+    self.dispatch.after_flush(self, flush_context)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\.venv\Lib\site-packages\sqlalchemy\event\attr.py", line 388, in __call__
+    fn(*args, **kw)
+  File "E:\.MEPHI\4 курс\Ваганов\Project-XML\tests\test_validation_history.py", line 80, in reject_flush
+    raise SQLAlchemyError('storage failure after flush')
+sqlalchemy.exc.SQLAlchemyError: storage failure after flush
+2026-11-03 21:51:27,555 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,561 | WARNING  | app.validation_history | Ошибка валидации | проверка=73fd000a-8705-431a-838d-5519d053ebfb | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-03 21:51:27,564 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-03 21:51:27,567 | INFO     | app.validation_history | В validation_acces сохранено строк: 1 | проверка=6c6fd5a3-8ab2-4223-959c-0ab39a07a1de | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\books_valid.xml
+2026-11-03 21:51:27,569 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,573 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,576 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=04633ed4-9ab4-42aa-be52-6bfbd0365dba | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:51:27,577 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,578 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=4037c3f4-3580-4674-8337-c98ddda204b3 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml
+2026-11-03 21:51:27,580 | INFO     | app.validator | Валидация пройдена | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,582 | INFO     | app.validator | Валидация пройдена | источник=<редактор> | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-03 21:51:27,584 | INFO     | app.validation_history | В validation_acces сохранено строк: 2 | проверка=1143100d-0594-47fb-a27b-96b2c449a1cd | источник=<редактор>
+2026-11-04 00:19:25,830 | WARNING  | app.validation_history | Ошибка валидации | проверка=efa09969-13ed-4856-8b11-a8aea69ef9fa | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-04 00:19:28,493 | WARNING  | app.validation_history | Ошибка валидации | проверка=34a52ea2-76e7-4982-8b81-0d351ddfd7b4 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-04 00:20:08,239 | WARNING  | app.validation_history | Ошибка валидации | проверка=ab5132ca-db91-493a-b5b7-27e1b4496034 | источник=E:\.MEPHI\4 курс\Ваганов\Project-XML\examples\people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.

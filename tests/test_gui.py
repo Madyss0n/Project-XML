@@ -5,12 +5,15 @@ from pathlib import Path
 from unittest.mock import patch
 
 from app.gui import ValidatorApp
+from app.validator import ValidationStorageError
+from tests.support import isolate_history
 
 EXAMPLES = Path(__file__).resolve().parents[1] / 'examples'
 
 
 class GuiTests(unittest.TestCase):
     def setUp(self):
+        self.history_engine, self.history_sessions = isolate_history(self)
         self.app = ValidatorApp()
         self.app.withdraw()
         self.app.update()
@@ -22,6 +25,11 @@ class GuiTests(unittest.TestCase):
         with patch('app.gui.filedialog.askopenfilename', return_value=str(EXAMPLES / 'people_invalid_email.xml')):
             self.app.open_file()
         self.app.update()
+        from sqlalchemy import select
+        from app.models import ValidationErrorRecord
+        with self.history_sessions() as session:
+            row = session.scalars(select(ValidationErrorRecord)).one()
+            self.assertEqual(Path(row.source_name), EXAMPLES / 'people_invalid_email.xml')
         self.assertTrue(self.app.issues)
         self.assertIn('name@example.org', self.app.details.get('1.0', 'end'))
         self.assertTrue(self.app.editor.tag_ranges('error_line'))
@@ -58,6 +66,18 @@ class GuiTests(unittest.TestCase):
         self.app.load(EXAMPLES / 'books_valid.xml')
         self.app.update()
         self.assertIn('Валидация пройдена', self.app.status.get())
+
+    def test_failed_history_write_is_visible(self):
+        with patch('app.validator.record_validation_failure', return_value='database locked'):
+            self.app.validate()
+        self.assertTrue(self.app.issues)
+        self.assertIn('не записаны в БД', self.app.status.get())
+
+    def test_successful_check_with_storage_failure_is_visible(self):
+        with patch('app.gui.validate_xml', side_effect=ValidationStorageError('database locked')):
+            self.app.validate()
+        self.assertFalse(self.app.issues)
+        self.assertIn('Валидация пройдена, но данные не записаны', self.app.status.get())
 
 
 if __name__ == '__main__':
