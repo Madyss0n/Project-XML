@@ -105,7 +105,7 @@ def record_validation_failure(issues, schema_path, source_name):
     return None
 
 
-def _parse_records(root):
+def parse_records(root):
     """XML уже проверен: извлекаем поля двух встроенных схем."""
     if root.tag == '{http://mephi3.ru}Books':
         ns = {'b': 'http://mephi3.ru'}
@@ -143,7 +143,7 @@ def _parse_records(root):
 def record_validation_success(root, schema_path, source_name):
     attempt = _attempt(schema_path, source_name)
     try:
-        records = [dict(**attempt, **values) for values in _parse_records(root)]
+        records = [dict(**attempt, **values) for values in parse_records(root)]
         _save('validation_acces', records)
     except (sqlite3.Error, OSError, ValueError) as exc:
         logger.exception('Не удалось сохранить данные успешной проверки в SQLite')

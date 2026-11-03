@@ -855,3 +855,13 @@ Traceback (most recent call last):
     with closing(sqlite3.connect(path)) as connection:
                  ^^^^^^^^^^^^^^^^^^^^^
 sqlite3.OperationalError: unable to open database file
+2026-11-04 01:21:57,911 | INFO     | app.validator | Валидация пройдена | источник=people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-04 01:21:57,940 | INFO     | app.database | В validation_acces сохранено строк: 2 | проверка=85173d9f-0fcf-4df5-a487-dc06e6cad5aa | источник=people_valid.xml
+2026-11-04 01:22:48,936 | WARNING  | app.database | Ошибка валидации | проверка=08b76a4a-380e-405c-b0b9-088b59f52e66 | источник=people_invalid_email.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 8, столбец 0: Element '{urn:mephi:people}email': [facet 'pattern'] The value 'ivan-at-example.org' is not accepted by the pattern '[^\s@]+@[^\s@.]+\.[^\s@]+'.
+Как исправить: Укажите email вида name@example.org, без пробелов.
+2026-11-04 01:39:24,407 | WARNING  | app.database | Ошибка валидации | проверка=b9a8baf9-8b5d-4d6c-a740-7fd866cf9b8b | источник=people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-04 01:52:12,851 | WARNING  | app.database | Ошибка валидации | проверка=fd357857-4255-40f5-a504-0575c67bb272 | источник=people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-04 01:52:21,744 | INFO     | app.validator | Валидация пройдена | источник=people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-04 01:52:21,748 | INFO     | app.database | В validation_acces сохранено строк: 2 | проверка=4c1c0a1d-bdcf-4e37-98d0-97c767eaba51 | источник=people_invalid_course.xml

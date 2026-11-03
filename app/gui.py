@@ -1,35 +1,11 @@
-import codecs
-import re
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
 from tkinter.scrolledtext import ScrolledText
 
-from app.validator import SCHEMAS, XMLValidationError, ValidationStorageError, validate_xml
+from app.validator import SCHEMAS, XMLValidationError, ValidationStorageError, validate_xml, decode_xml, normalize_encoding
 
 ROOT = Path(__file__).resolve().parent.parent
-
-
-def normalize_encoding(text: str) -> str:
-    return re.sub(r'(<\?xml\s+[^?]*encoding=)([\x22\x27])[^\x22\x27]+\2',
-                  r'\1"UTF-8"', text, count=1)
-
-
-def decode_xml(data: bytes) -> str:
-    """Decode even malformed XML for editing; normalize the declaration to UTF-8."""
-    if data.startswith((codecs.BOM_UTF32_LE, codecs.BOM_UTF32_BE)):
-        encoding = 'utf-32'
-    elif data.startswith((codecs.BOM_UTF16_LE, codecs.BOM_UTF16_BE)):
-        encoding = 'utf-16'
-    elif data.startswith(b'\x00<\x00?'):
-        encoding = 'utf-16-be'
-    elif data.startswith(b'<\x00?\x00'):
-        encoding = 'utf-16-le'
-    else:
-        declaration = re.match(br'<\?xml\s+[^?]*encoding=[\x22\x27]([^\x22\x27]+)', data)
-        encoding = declaration.group(1).decode('ascii') if declaration else 'utf-8-sig'
-    text = data.decode(encoding)
-    return normalize_encoding(text).replace('\r\n', '\n').replace('\r', '\n')
 
 
 class ValidatorApp(tk.Tk):

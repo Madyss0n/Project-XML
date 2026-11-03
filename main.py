@@ -1,4 +1,4 @@
-from app.gui import ValidatorApp
+from app.web import app
 
 if __name__ == '__main__':
-    ValidatorApp().mainloop()
+    app.run(host='127.0.0.1', port=5000)
