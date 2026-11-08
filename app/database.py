@@ -1,4 +1,3 @@
-"""SQLite: успешные записи и ошибки проверки XML."""
 import sqlite3
 from contextlib import closing
 from datetime import datetime, timezone
@@ -56,13 +55,11 @@ CREATE INDEX IF NOT EXISTS ix_validation_acces_occurred_at ON validation_acces(o
 
 @lru_cache(maxsize=4)
 def _init_db(path):
-    """Создаём таблицы один раз для каждого файла БД за запуск приложения."""
     with closing(sqlite3.connect(path)) as connection:
         connection.executescript(SCHEMA_SQL)
 
 
 def _save(table, records):
-    # Имена таблиц/столбцов задаются нашим кодом, значения передаются через ?.
     if table not in ('validation_errors', 'validation_acces'):
         raise ValueError('Неизвестная таблица истории проверки')
     _init_db(str(DATABASE_PATH))
@@ -74,8 +71,50 @@ def _save(table, records):
     sql = f'INSERT INTO {table} ({fields}) VALUES ({placeholders})'
     values = [tuple(record[column] for column in columns) for record in records]
     with closing(sqlite3.connect(DATABASE_PATH)) as connection:
-        with connection:  # Все строки документа сохраняются или откатываются вместе.
+        with connection:
             connection.executemany(sql, values)
+
+
+HISTORY_TABLES = {'success': 'validation_acces', 'error': 'validation_errors'}
+
+
+def read_history(validation_id=None, *, outcome='', schema=''):
+    if not DATABASE_PATH.is_file():
+        return []
+    uri = DATABASE_PATH.resolve().as_uri() + '?mode=ro'
+    with closing(sqlite3.connect(uri, uri=True)) as connection:
+        connection.row_factory = sqlite3.Row
+        existing = {row[0] for row in connection.execute(
+            "SELECT name FROM sqlite_master WHERE type = 'table'"
+        )}
+        queries = []
+        params = []
+        for status, table in HISTORY_TABLES.items():
+            if table not in existing:
+                continue
+            if validation_id is not None:
+                rows = connection.execute(
+                    f"SELECT *, ? AS status FROM {table} WHERE validation_id = ? ORDER BY id",
+                    (status, validation_id),
+                ).fetchall()
+                if rows:
+                    return [dict(row) for row in rows]
+            else:
+                if outcome and outcome != status:
+                    continue
+                where = ''
+                if schema:
+                    where = "WHERE ('/' || replace(schema_path, char(92), '/')) LIKE ? "
+                    params.append(f'%/{schema}.xsd')
+                queries.append(
+                    f"SELECT validation_id, occurred_at, source_name, schema_path, "
+                    f"'{status}' AS status, COUNT(*) AS item_count FROM {table} "
+                    f"{where}GROUP BY validation_id, occurred_at, source_name, schema_path"
+                )
+        if not queries:
+            return []
+        sql = ' UNION ALL '.join(queries) + ' ORDER BY occurred_at DESC, validation_id DESC LIMIT 30'
+        return [dict(row) for row in connection.execute(sql, params)]
 
 
 def _attempt(schema_path, source_name):
@@ -106,7 +145,6 @@ def record_validation_failure(issues, schema_path, source_name):
 
 
 def parse_records(root):
-    """XML уже проверен: извлекаем поля двух встроенных схем."""
     if root.tag == '{http://mephi3.ru}Books':
         ns = {'b': 'http://mephi3.ru'}
         return [dict(

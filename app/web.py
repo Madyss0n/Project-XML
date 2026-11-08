@@ -1,12 +1,14 @@
-"""Веб-интерфейс Flask: форма загрузки и результат проверки XML."""
-from flask import Flask, render_template, request
+from io import BytesIO
+from sqlite3 import Error as SQLiteError
 
-from app.database import parse_records
+from flask import Flask, render_template, request, send_file
+
+from app.database import parse_records, read_history
 from app.logger import setup_logger
 from app.validator import SCHEMAS, XMLValidationError, ValidationStorageError, validate_xml, decode_xml, normalize_encoding
 
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # До 2 МБ на запрос.
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 app.config['MAX_FORM_MEMORY_SIZE'] = app.config['MAX_CONTENT_LENGTH']
 logger = setup_logger(__name__)
 
@@ -20,7 +22,6 @@ PEOPLE_COLUMNS = [
 
 
 def page(schema='people', filename=None, result=None, issues=None, records=None, warning=None, xml_text=None):
-    """Один шаблон используется для формы, ошибок и успешного результата."""
     return render_template(
         'validate.html', schema=schema, filename=filename, result=result,
         issues=issues or [], records=records or [], warning=warning, xml_text=xml_text,
@@ -45,7 +46,6 @@ def validate():
         uploaded = request.files.get('xml_file')
         if uploaded is None or not uploaded.filename:
             return page(schema, result=('error', 'Выберите XML-файл для проверки.')), 400
-        # Имя используется только для показа и истории, файл на диск не записываем.
         filename = uploaded.filename.replace('\\', '/').rsplit('/', 1)[-1]
         if not filename.lower().endswith('.xml'):
             return page(schema, filename, ('error', 'Нужен файл с расширением .xml.')), 400
@@ -80,3 +80,47 @@ def validate():
 @app.errorhandler(413)
 def upload_too_large(error):
     return page(result=('error', 'Превышен размер загрузки. Выберите XML меньше 2 МБ.')), 413
+
+
+@app.post('/download')
+def download():
+    filename = request.form.get('filename', '').replace('\\', '/').rsplit('/', 1)[-1]
+    if not filename.lower().endswith('.xml') or any(ord(char) < 32 for char in filename):
+        filename = 'document.xml'
+    xml_text = normalize_encoding(request.form.get('xml_text', ''))
+    return send_file(BytesIO(xml_text.encode('utf-8')), mimetype='application/xml',
+                     as_attachment=True, download_name=filename)
+
+
+@app.get('/history')
+@app.get('/history/results', endpoint='history_results')
+@app.get('/history/<uuid:validation_id>')
+def history(validation_id=None):
+    outcome = request.args.get('outcome', '')
+    schema = request.args.get('schema', '')
+    if outcome not in ('success', 'error'):
+        outcome = ''
+    if schema not in SCHEMAS:
+        schema = ''
+    filters = dict(outcome=outcome, schema=schema)
+    show_table = request.endpoint == 'history_results' or request.args.get('show_table') == '1'
+    if validation_id is None and not show_table:
+        return render_template('history.html', **filters)
+    try:
+        rows = read_history(str(validation_id) if validation_id is not None else None, **filters)
+    except SQLiteError:
+        logger.exception('Не удалось прочитать историю проверок')
+        return render_template('history.html', error='Не удалось прочитать историю проверок.'), 503
+
+    for row in rows:
+        row['schema_name'] = row['schema_path'].replace('\\', '/').rsplit('/', 1)[-1]
+
+    if validation_id is None:
+        return render_template('history.html', checks=rows, show_table=True, **filters)
+    if not rows:
+        return render_template('history.html', error='Проверка не найдена.'), 404
+    check = rows[0]
+    success = check['status'] == 'success'
+    columns = BOOK_COLUMNS if check.get('record_type') == 'book' else PEOPLE_COLUMNS
+    return render_template('history.html', check=check, columns=columns,
+                           records=rows if success else [], issues=[] if success else rows, **filters)

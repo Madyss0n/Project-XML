@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Books xmlns="http://mephi3.ru">
+  <book>
+    <name>Война и мир</name>
+    <author>Толстой</author>
+    <publishDate>1869-02-30</publishDate>
+  </book>
+</Books>

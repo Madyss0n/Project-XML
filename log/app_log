@@ -865,3 +865,51 @@ sqlite3.OperationalError: unable to open database file
 Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
 2026-11-04 01:52:21,744 | INFO     | app.validator | Валидация пройдена | источник=people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
 2026-11-04 01:52:21,748 | INFO     | app.database | В validation_acces сохранено строк: 2 | проверка=4c1c0a1d-bdcf-4e37-98d0-97c767eaba51 | источник=people_invalid_course.xml
+2026-11-04 21:23:22,423 | WARNING  | app.database | Ошибка валидации | проверка=5107a81d-e88f-4aad-b8fa-3fd308ed766e | источник=people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-04 21:23:39,877 | WARNING  | app.database | Ошибка валидации | проверка=c7d8f309-1f06-4d8d-a1d3-30490938c832 | источник=people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 1, столбец 37: parsing XML declaration: '?>' expected
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-04 21:23:39,878 | WARNING  | app.database | Ошибка валидации | проверка=c7d8f309-1f06-4d8d-a1d3-30490938c832 | источник=people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 15, столбец 3: Extra content at the end of the document
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-04 21:23:55,679 | WARNING  | app.database | Ошибка валидации | проверка=2a329f0e-d14d-4786-a016-d7688d891f9c | источник=people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-04 21:24:30,650 | WARNING  | app.database | Ошибка валидации | проверка=2a862a16-d047-4473-9acc-6fab6ea8c191 | источник=people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-04 21:24:41,674 | WARNING  | app.database | Ошибка валидации | проверка=d53fad5d-d726-4f27-9a0f-f163c37428ae | источник=people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 4, столбец 0: Element '{urn:mephi:people}person': The type definition is abstract.
+Как исправить: Для person задайте xsi:type="p:StudentType" либо "p:EmployeeType", объявите xmlns:p="urn:mephi:people" и xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance".
+2026-11-04 21:27:10,703 | WARNING  | app.database | Ошибка валидации | проверка=be3bb47f-f3a0-416a-b749-a5a18c1939f0 | источник=people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 12, столбец 0: Element '{urn:mephi:people}university': This element is not expected. Expected is ( {urn:mephi:people}organization ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-04 21:27:10,703 | WARNING  | app.database | Ошибка валидации | проверка=be3bb47f-f3a0-416a-b749-a5a18c1939f0 | источник=people_invalid_subtype.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 21, столбец 0: Element '{urn:mephi:people}organization': This element is not expected. Expected is ( {urn:mephi:people}university ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-08 16:56:27,149 | WARNING  | app.database | Ошибка валидации | проверка=b5e97aef-9186-4f9e-96e1-4631e205b034 | источник=people_invalid_missing_field.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 12, столбец 0: Element '{urn:mephi:people}course': This element is not expected. Expected is ( {urn:mephi:people}university ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-08 16:59:10,282 | WARNING  | app.database | Ошибка валидации | проверка=38b0527b-8741-4af3-b652-0de04f13b3e4 | источник=books_invalid_order.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 4, столбец 0: Element '{http://mephi3.ru}author': This element is not expected. Expected is ( {http://mephi3.ru}name ).
+Как исправить: Добавьте ожидаемый элемент из сообщения и проверьте порядок полей в xs:sequence схемы.
+2026-11-08 17:51:16,534 | WARNING  | app.database | Ошибка валидации | проверка=9db4d7da-8713-4c9f-92e2-30f89f5a06ea | источник=people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-08 17:51:28,418 | INFO     | app.validator | Валидация пройдена | источник=books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-08 17:51:28,574 | INFO     | app.database | В validation_acces сохранено строк: 1 | проверка=53d6d65b-67b8-4503-b8ca-2905955ea54c | источник=books_valid.xml
+2026-11-08 17:51:37,965 | INFO     | app.validator | Валидация пройдена | источник=people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-08 17:51:38,172 | INFO     | app.database | В validation_acces сохранено строк: 2 | проверка=6ff1361e-33a7-4482-8165-8fb3622832f9 | источник=people_valid.xml
+2026-11-08 17:54:01,266 | INFO     | app.validator | Валидация пройдена | источник=books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-08 17:54:01,294 | INFO     | app.database | В validation_acces сохранено строк: 1 | проверка=413bb6a3-2835-4ac5-b518-a72cef62f73f | источник=books_valid.xml
+2026-11-08 17:54:01,307 | WARNING  | app.database | Ошибка валидации | проверка=d0bd0b62-b4dc-4e2c-a04a-0aeff8d5743b | источник=books_invalid_date.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd | XSD, строка 6, столбец 0: Element '{http://mephi3.ru}publishDate': '1869-02-30' is not a valid value of the atomic type 'xs:date'.
+Как исправить: Укажите существующую дату в формате ГГГГ-ММ-ДД, например 2003-05-21.
+2026-11-08 17:54:01,313 | INFO     | app.validator | Валидация пройдена | источник=people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-08 17:54:01,318 | INFO     | app.database | В validation_acces сохранено строк: 2 | проверка=1061bc4e-e497-48f6-b317-68a1ec709a1d | источник=people_valid.xml
+2026-11-08 17:54:01,320 | WARNING  | app.database | Ошибка валидации | проверка=18c9769f-adc5-40c5-98b5-7fad1dbc9946 | источник=people_invalid_course.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | XSD, строка 13, столбец 0: Element '{urn:mephi:people}course': [facet 'maxInclusive'] The value '9' is greater than the maximum value allowed ('6').
+Как исправить: Измените значение с учётом границы из сообщения; обязательный текст не должен быть пустым.
+2026-11-08 17:58:45,930 | INFO     | app.validator | Валидация пройдена | источник=people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-08 17:58:46,033 | INFO     | app.database | В validation_acces сохранено строк: 2 | проверка=4ad62e86-b132-4bd1-a779-76efe123de1b | источник=people_valid.xml
+2026-11-08 18:04:23,467 | INFO     | app.validator | Валидация пройдена | источник=books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-08 18:04:23,497 | INFO     | app.database | В validation_acces сохранено строк: 1 | проверка=316d09fa-1e7f-45f6-a3c5-f8195720c1a1 | источник=books_valid.xml
+2026-11-08 18:06:24,343 | INFO     | app.validator | Валидация пройдена | источник=people_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd
+2026-11-08 18:06:24,502 | INFO     | app.database | В validation_acces сохранено строк: 2 | проверка=ceecd015-e88a-4ce2-8cf1-832ae18f048d | источник=people_valid.xml
+2026-11-08 18:06:35,816 | WARNING  | app.database | Ошибка валидации | проверка=b3f4e99a-e74d-45f0-b0a8-121da50d8d36 | источник=people_invalid_syntax.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\people.xsd | Синтаксис XML, строка 11, столбец 15: Opening and ending tag mismatch: contacts line 7 and contact
+Как исправить: Проверьте парность тегов, кавычки атрибутов и экранирование & как &amp;.
+2026-11-08 18:06:47,350 | INFO     | app.validator | Валидация пройдена | источник=books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-08 18:06:47,535 | INFO     | app.database | В validation_acces сохранено строк: 1 | проверка=33964282-5159-475b-8f5e-92a6d4955f12 | источник=books_valid.xml
+2026-11-08 19:01:07,844 | INFO     | app.validator | Валидация пройдена | источник=books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-08 19:01:08,030 | INFO     | app.database | В validation_acces сохранено строк: 1 | проверка=e685e673-6bf8-4fe4-a20d-2fa35e8d49f6 | источник=books_valid.xml
+2026-11-08 19:09:40,959 | INFO     | app.validator | Валидация пройдена | источник=books_valid.xml | схема=E:\.MEPHI\4 курс\Ваганов\Project-XML\app\schemas\books.xsd
+2026-11-08 19:09:41,056 | INFO     | app.database | В validation_acces сохранено строк: 1 | проверка=e983b6e7-1aec-4730-92f0-dbda8408c082 | источник=books_valid.xml

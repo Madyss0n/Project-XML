@@ -7,3 +7,4 @@ log/
 *.db-journal
 *.db-wal
 *.db-shm
+output/validator.docx

@@ -7,9 +7,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="{{ url_for('validate') }}">XML-валидатор</a>
-  </header>
+  {% include '_navigation.html' %}
 
   <main>
     <div class="intro">
@@ -68,45 +66,15 @@
               <option value="books" {% if schema == 'books' %}selected{% endif %}>Books — книги</option>
             </select>
           </div>
-          <button type="submit">Проверить</button>
+          <div class="editor-buttons">
+            <button type="submit">Проверить</button>
+            <button type="submit" class="secondary" formaction="{{ url_for('download') }}">Скачать XML</button>
+          </div>
         </div>
       </form>
       {% endif %}
 
-      {% if issues %}
-      <p class="result-summary">Ошибок: <strong>{{ issues|length }}</strong>. Исправьте текст в поле XML и нажмите «Проверить».</p>
-      <div class="issue-list">
-        {% for issue in issues %}
-        <article class="issue">
-          <div class="issue-heading"><h3>{{ issue.category }}</h3>
-            <span>Строка {{ issue.line }}{% if issue.column %}, столбец {{ issue.column }}{% endif %}</span>
-          </div>
-          <p class="diagnostic">{{ issue.message }}</p>
-          <p class="suggestion"><strong>Как исправить:</strong> {{ issue.suggestion }}</p>
-          {% if issue.path %}<p class="hint">Путь: <code>{{ issue.path }}</code></p>{% endif %}
-        </article>
-        {% endfor %}
-      </div>
-      {% endif %}
-
-      {% if records %}
-      <p class="result-summary">Получено записей: <strong>{{ records|length }}</strong>. Ниже — поля из вашего XML.</p>
-      <div class="table-scroll" tabindex="0" role="region" aria-label="Данные из XML">
-        <table>
-          <thead><tr>{% for key, label in columns %}<th scope="col">{{ label }}</th>{% endfor %}</tr></thead>
-          <tbody>
-            {% for record in records %}
-            <tr>
-              {% for key, label in columns %}
-              {% set value = record.get(key) %}
-              <td>{% if key == 'record_type' %}{{ {'student': 'Студент', 'employee': 'Сотрудник'}.get(value, value) }}{% elif value is not none %}{{ value }}{% else %}<span class="empty">—</span>{% endif %}</td>
-              {% endfor %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      {% endif %}
+      {% include '_result_data.html' %}
     </section>
     {% endif %}
 

@@ -1,8 +1,10 @@
-from dataclasses import dataclass
-from pathlib import Path
 import codecs
 import re
+from dataclasses import dataclass
+from pathlib import Path
+
 from lxml import etree
+
 from app.logger import setup_logger
 from app.database import record_validation_failure, record_validation_success
 
@@ -10,16 +12,14 @@ logger = setup_logger(__name__)
 
 SCHEMA_PATH = Path(__file__).parent / 'schemas' / 'books.xsd'
 SCHEMAS = {'books': SCHEMA_PATH, 'people': SCHEMA_PATH.with_name('people.xsd')}
+XML_ENCODING = r'(\A<\?xml\s+[^?]*\bencoding\s*=\s*)([\x22\x27])([^\x22\x27]+)\2'
 
 
 def normalize_encoding(text: str) -> str:
-    """Текст из браузера отправляем валидатору в UTF-8."""
-    return re.sub(r'(<\?xml\s+[^?]*encoding=)([\x22\x27])[^\x22\x27]+\2',
-                  r'\1"UTF-8"', text, count=1)
+    return re.sub(XML_ENCODING, r'\1"UTF-8"', text, count=1)
 
 
 def decode_xml(data: bytes) -> str:
-    """Читаем текст даже у XML со сломанными тегами, чтобы его можно было исправить."""
     if data.startswith((codecs.BOM_UTF32_LE, codecs.BOM_UTF32_BE)):
         encoding = 'utf-32'
     elif data.startswith((codecs.BOM_UTF16_LE, codecs.BOM_UTF16_BE)):
@@ -33,8 +33,8 @@ def decode_xml(data: bytes) -> str:
     elif data.startswith(b'<\x00?\x00'):
         encoding = 'utf-16-le'
     else:
-        declaration = re.match(br'<\?xml\s+[^?]*encoding=[\x22\x27]([^\x22\x27]+)', data)
-        encoding = declaration.group(1).decode('ascii') if declaration else 'utf-8-sig'
+        declaration = re.match(XML_ENCODING.encode('ascii'), data)
+        encoding = declaration.group(3).decode('ascii') if declaration else 'utf-8-sig'
     return normalize_encoding(data.decode(encoding)).replace('\r\n', '\n').replace('\r', '\n')
 
 @dataclass(frozen=True)
@@ -59,8 +59,6 @@ class XMLValidationError(Exception):
 
 
 class ValidationStorageError(RuntimeError):
-    """The XML is valid, but saving its parsed data failed."""
-
     def __init__(self, message, root=None):
         self.root = root
         super().__init__(message)
@@ -117,7 +115,6 @@ def _validate_xml(xml_bytes: bytes, schema_path: Path) -> etree._Element:
 
 def validate_xml(xml_bytes: bytes, schema_path: str | Path | None = None,
                  *, source_name: str | Path | None = None) -> etree._Element:
-    """Validate XML, then store either diagnostics or successfully parsed records."""
     schema_path = Path(schema_path or SCHEMA_PATH).resolve()
     source = str(source_name) if source_name is not None else "<bytes>"
     try:

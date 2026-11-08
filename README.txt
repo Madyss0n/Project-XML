@@ -1,5 +1,6 @@
-Актуальная документация проекта находится в README.md.
-Запуск оконного валидатора: main.py.
-Автотесты: .venv/Scripts/python.exe -m unittest discover -s tests -v
-Описание схемы: docs/people-schema.md.
-Анализ проекта: docs/project-review.md.
+XML-валидатор
+
+Откройте validator.bat, введите 1 и нажмите Enter.
+Адрес приложения: http://127.0.0.1:5000/
+Результаты проверок хранятся в books.db, сообщения — в log/app_log.
+Инструкция по запуску, схемам и SQLite находится в README.md.
