@@ -4,7 +4,6 @@
            targetNamespace="urn:mephi:people"
            elementFormDefault="qualified">
 
-  <!-- Общие поля всех людей -->
   <xs:complexType name="PersonType" abstract="true">
     <xs:sequence>
       <xs:element name="fullName" type="xs:string"/>
@@ -27,7 +26,6 @@
     <xs:attribute name="id" type="xs:ID" use="required"/>
   </xs:complexType>
 
-  <!-- Подкласс студента -->
   <xs:complexType name="StudentType">
     <xs:complexContent>
       <xs:extension base="p:PersonType">
@@ -46,7 +44,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <!-- Подкласс сотрудника -->
   <xs:complexType name="EmployeeType">
     <xs:complexContent>
       <xs:extension base="p:PersonType">

@@ -1,0 +1,6 @@
+<header class="topbar">
+  <a class="brand" href="{{ url_for('validate') }}">XML-валидатор</a>
+  <nav aria-label="Навигация">
+    <a href="{{ url_for('history') }}"{% if request.endpoint == 'history' %} aria-current="page"{% endif %}>История проверок</a>
+  </nav>
+</header>

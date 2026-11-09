@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>История проверок</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  {% include '_navigation.html' %}
+  <main>
+    <h1>История проверок</h1>
+    {% if error %}
+      <p class="notice error">{{ error }}</p>
+      <a href="{{ url_for('history') }}">К списку проверок</a>
+    {% elif check %}
+      <p><a href="{{ url_for('history', show_table=1, outcome=outcome, schema=schema) }}">← К таблице</a></p>
+      <h2 class="filename-title">{{ check.source_name }}</h2>
+      <p>{{ check.occurred_at[:19] }} UTC · {{ check.schema_name }}</p>
+      <p class="notice {{ check.status }}">{{ 'Проверка пройдена' if records else 'Ошибки проверки' }}</p>
+      {% include '_result_data.html' %}
+    {% else %}
+      <form method="get" action="{{ url_for('history') }}" class="history-filters">
+        <input type="hidden" name="show_table" value="1">
+        <div>
+          <label for="history-outcome">Результат</label>
+          <select id="history-outcome" name="outcome">
+            <option value="">Все результаты</option>
+            <option value="success" {% if outcome == 'success' %}selected{% endif %}>Провалидированные</option>
+            <option value="error" {% if outcome == 'error' %}selected{% endif %}>Ошибки</option>
+          </select>
+        </div>
+        <div>
+          <label for="history-schema">Схема</label>
+          <select id="history-schema" name="schema">
+            <option value="">Все схемы</option>
+            <option value="books" {% if schema == 'books' %}selected{% endif %}>Книги</option>
+            <option value="people" {% if schema == 'people' %}selected{% endif %}>Люди</option>
+          </select>
+        </div>
+        <button type="submit">Открыть таблицу</button>
+      </form>
+      {% if show_table %}
+      {% if checks %}
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Последние проверки">
+        <table>
+          <thead><tr><th scope="col">Время (UTC)</th><th scope="col">Файл</th><th scope="col">Схема</th><th scope="col">Результат</th></tr></thead>
+          <tbody>
+            {% for check in checks %}
+            <tr>
+              <td>{{ check.occurred_at[:19] }}</td>
+              <td><a href="{{ url_for('history', validation_id=check.validation_id, outcome=outcome, schema=schema) }}">{{ check.source_name }}</a></td>
+              <td>{{ check.schema_name }}</td>
+              <td>{{ 'Успешно · записей' if check.status == 'success' else 'Ошибок' }}: {{ check.item_count }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% elif outcome or schema %}
+        <p>По выбранным фильтрам проверок нет.</p>
+      {% else %}
+        <p>Пока нет сохранённых проверок.</p>
+        <a href="{{ url_for('validate') }}">Проверить XML</a>
+      {% endif %}
+      {% endif %}
+    {% endif %}
+  </main>
+</body>
+</html>

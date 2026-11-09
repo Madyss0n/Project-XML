@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Проверка XML</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  {% include '_navigation.html' %}
+
+  <main>
+    <div class="intro">
+      <p class="eyebrow">XML + XSD</p>
+      <h1>Проверка документа</h1>
+      <p>Загрузите XML и выберите схему.</p>
+    </div>
+
+    <section class="panel" aria-labelledby="upload-title">
+      <h2 id="upload-title">Загрузить XML</h2>
+      <form method="post" action="{{ url_for('validate') }}" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="upload">
+        <div class="form-grid">
+          <div class="field">
+            <label for="xml-file">XML-файл</label>
+            <input id="xml-file" name="xml_file" type="file" accept=".xml" required aria-describedby="file-hint">
+            <p class="hint" id="file-hint">До 2 МБ. Примеры находятся в папке examples проекта.</p>
+          </div>
+          <div class="field">
+            <label for="schema">XSD-схема</label>
+            <select id="schema" name="schema">
+              <option value="people" {% if schema == 'people' %}selected{% endif %}>People — люди</option>
+              <option value="books" {% if schema == 'books' %}selected{% endif %}>Books — книги</option>
+            </select>
+            <p class="hint">Выберите схему, которой должен соответствовать файл.</p>
+          </div>
+        </div>
+        <div class="form-bottom">
+          <button type="submit">Загрузить и проверить <span aria-hidden="true">→</span></button>
+        </div>
+      </form>
+    </section>
+
+    {% if result %}
+    <section class="result" aria-live="polite" aria-labelledby="result-title">
+      <div class="result-heading">
+        <h2 id="result-title">Результат проверки</h2>
+        {% if filename %}<span class="filename">{{ filename }}</span>{% endif %}
+      </div>
+      <div class="notice {{ result[0] }}" role="status">{{ result[1] }}</div>
+      {% if warning %}<p class="storage-warning">{{ warning }}</p>{% endif %}
+
+      {% if xml_text is not none %}
+      <form class="panel editor" method="post" action="{{ url_for('validate') }}">
+        <input type="hidden" name="action" value="edit">
+        <input type="hidden" name="filename" value="{{ filename }}">
+        <label for="xml-text">XML-документ</label>
+        <textarea id="xml-text" name="xml_text" rows="18" spellcheck="false" wrap="off" aria-describedby="editor-hint">
+{{ xml_text }}</textarea>
+        <p class="hint" id="editor-hint">Измените XML и нажмите «Проверить». Исходный файл на компьютере не изменяется.</p>
+        <div class="editor-actions">
+          <div class="field">
+            <label for="editor-schema">XSD-схема</label>
+            <select id="editor-schema" name="schema">
+              <option value="people" {% if schema == 'people' %}selected{% endif %}>People — люди</option>
+              <option value="books" {% if schema == 'books' %}selected{% endif %}>Books — книги</option>
+            </select>
+          </div>
+          <div class="editor-buttons">
+            <button type="submit">Проверить</button>
+            <button type="submit" class="secondary" formaction="{{ url_for('download') }}">Скачать XML</button>
+          </div>
+        </div>
+      </form>
+      {% endif %}
+
+      {% include '_result_data.html' %}
+    </section>
+    {% endif %}
+
+  </main>
+</body>
+</html>

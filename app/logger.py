@@ -1,13 +1,14 @@
 import logging
 import sys
-from pathlib  import Path
+from pathlib import Path
 
-Log_Dir = Path(__file__).parent.parent / "log"
-Log_Dir.mkdir(exist_ok=True)
+LOG_DIR = Path(__file__).resolve().parent.parent / "log"
+LOG_DIR.mkdir(exist_ok=True)
 
 def setup_logger(name: str) -> logging.Logger:
     logger = logging.getLogger(name)
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
 
     if logger.handlers:
         return logger
@@ -16,7 +17,7 @@ def setup_logger(name: str) -> logging.Logger:
         "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
     )
 
-    file_handler = logging.FileHandler(Log_Dir / "app_log", encoding="utf-8")
+    file_handler = logging.FileHandler(LOG_DIR / "app_log", encoding="utf-8")
     file_handler.setFormatter(formatter)
 
     console_handler = logging.StreamHandler(sys.stdout)

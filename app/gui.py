@@ -1,35 +1,11 @@
-import codecs
-import re
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
 from tkinter.scrolledtext import ScrolledText
 
-from app.validator import SCHEMAS, XMLValidationError, validate_xml
+from app.validator import SCHEMAS, XMLValidationError, ValidationStorageError, validate_xml, decode_xml, normalize_encoding
 
 ROOT = Path(__file__).resolve().parent.parent
-
-
-def normalize_encoding(text: str) -> str:
-    return re.sub(r'(<\?xml\s+[^?]*encoding=)([\x22\x27])[^\x22\x27]+\2',
-                  r'\1"UTF-8"', text, count=1)
-
-
-def decode_xml(data: bytes) -> str:
-    """Decode even malformed XML for editing; normalize the declaration to UTF-8."""
-    if data.startswith((codecs.BOM_UTF32_LE, codecs.BOM_UTF32_BE)):
-        encoding = 'utf-32'
-    elif data.startswith((codecs.BOM_UTF16_LE, codecs.BOM_UTF16_BE)):
-        encoding = 'utf-16'
-    elif data.startswith(b'\x00<\x00?'):
-        encoding = 'utf-16-be'
-    elif data.startswith(b'<\x00?\x00'):
-        encoding = 'utf-16-le'
-    else:
-        declaration = re.match(br'<\?xml\s+[^?]*encoding=[\x22\x27]([^\x22\x27]+)', data)
-        encoding = declaration.group(1).decode('ascii') if declaration else 'utf-8-sig'
-    text = data.decode(encoding)
-    return normalize_encoding(text).replace('\r\n', '\n').replace('\r', '\n')
 
 
 class ValidatorApp(tk.Tk):
@@ -154,21 +130,27 @@ class ValidatorApp(tk.Tk):
     def validate(self):
         self.invalidate()
         try:
-            root = validate_xml(normalize_encoding(self.text()).encode('utf-8'), SCHEMAS[self.schema.get()])
+            root = validate_xml(normalize_encoding(self.text()).encode('utf-8'),
+                                SCHEMAS[self.schema.get()], source_name=self.path or '<редактор>')
         except XMLValidationError as exc:
             self.issues = exc.issues
             for i, issue in enumerate(self.issues):
                 self.errors.insert('', 'end', iid=str(i), values=(issue.line, issue.category, issue.message))
             self.status.set(f'Проверка не пройдена. Ошибок: {len(self.issues)}. Исправьте XML и нажмите F5.')
+            if exc.persistence_error:
+                self.status.set(self.status.get() + ' Ошибки не записаны в БД; подробности в журнале.')
             if self.issues:
                 self.errors.selection_set('0')
                 self.select_error()
+        except ValidationStorageError as exc:
+            self.status.set('Валидация пройдена, но данные не записаны в БД. Подробности в журнале.')
+            self.set_details(str(exc))
         except (RuntimeError, UnicodeError) as exc:
             self.status.set('Проверка не выполнена.')
             self.set_details(str(exc))
         else:
-            self.status.set(f'Валидация пройдена. Схема: {self.schema.get()}. Записей: {len(root)}. Проверен текст редактора.')
-            self.set_details('XML синтаксически корректен и соответствует выбранной XSD-схеме. Изменения можно сохранить кнопкой «Сохранить как…».')
+            self.status.set(f'Валидация пройдена. Схема: {self.schema.get()}. В БД сохранено записей: {len(root)}.')
+            self.set_details('XML соответствует XSD-схеме. Данные сохранены по столбцам в таблице validation_acces. Изменения XML можно сохранить кнопкой «Сохранить как…».')
 
     def select_error(self, _=None):
         selection = self.errors.selection()

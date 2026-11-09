@@ -1,0 +1,34 @@
+      {% if issues %}
+      <p class="result-summary">Ошибок: <strong>{{ issues|length }}</strong>. {% if xml_text is defined and xml_text is not none %}Исправьте текст в поле XML и нажмите «Проверить».{% endif %}</p>
+      <div class="issue-list">
+        {% for issue in issues %}
+        <article class="issue">
+          <div class="issue-heading"><h3>{{ issue.category }}</h3>
+            <span>Строка {{ issue.line }}{% if issue.column %}, столбец {{ issue.column }}{% endif %}</span>
+          </div>
+          <p class="diagnostic">{{ issue.message }}</p>
+          <p class="suggestion"><strong>Как исправить:</strong> {{ issue.suggestion }}</p>
+          {% if issue.path %}<p class="hint">Путь: <code>{{ issue.path }}</code></p>{% endif %}
+        </article>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if records %}
+      <p class="result-summary">Получено записей: <strong>{{ records|length }}</strong>. Ниже — поля из вашего XML.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Данные из XML">
+        <table>
+          <thead><tr>{% for key, label in columns %}<th scope="col">{{ label }}</th>{% endfor %}</tr></thead>
+          <tbody>
+            {% for record in records %}
+            <tr>
+              {% for key, label in columns %}
+              {% set value = record.get(key) %}
+              <td>{% if key == 'record_type' %}{{ {'student': 'Студент', 'employee': 'Сотрудник'}.get(value, value) }}{% elif value is not none %}{{ value }}{% else %}<span class="empty">—</span>{% endif %}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}

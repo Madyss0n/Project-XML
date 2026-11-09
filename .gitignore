@@ -1,7 +1,10 @@
 .venv/
 __pycache__/
 *.pyc
-books.db
-logs/
 log/
 *.db
+.idea/
+*.db-journal
+*.db-wal
+*.db-shm
+output/validator.docx
